@@ -30,14 +30,30 @@ class MyStack {
     return this.elem[this.length - 1]
   }
 }
+let stack = new MyStack()
 
-let arr = new MyStack()
-arr.Push(2)
-console.log(arr)
-arr.Push(4)
-console.log(arr)
-let string = 'Stack: '
-for (let i = 0; i < arr.length; i++) {
-  string += String(arr.elem[i])
+let checker = new MyStack()
+let oppBrackets = ['(', '[', '{']
+let clsBrackets = [')', ']', '}']
+for(let i = 0; i < stack.length; i++){
+  console.log(stack.elem[i])
+  if (oppBrackets.includes(stack.elem[i])){
+    checker.Push(stack.elem[i])
+  }
+  if (clsBrackets.includes(stack.elem[i])){
+    if (checker.length){
+      if (oppBrackets.indexOf(checker.Top()) === clsBrackets.indexOf(stack.elem[i])){
+        checker.Pop()
+      }
+    }
+    else{
+        console.log("Wrong brackets!")
+    }
+  }
 }
-console.log(string)
+if (checker.length == 0){
+   console.log("Right brackets!")
+}
+else{
+  console.log("Wrong brackets!")
+}
