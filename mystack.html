@@ -3,7 +3,10 @@
 <html lang="en">
   <script src="mystack.js"></script>
   <head>
-    <link rel="stylesheet" href="designs.css" />
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.css"
+    />
     <script>
       let stack
     </script>
@@ -13,12 +16,7 @@
     <div>
       <p id="stack_box"></p>
     </div>
-    <input
-      id="createbtn"
-      type="button"
-      value="Create Stack"
-      style="background-color: red"
-    />
+    <input id="createbtn" type="button" value="Create Stack" />
     <script>
       createbtn.onclick = function () {
         stack = new MyStack()
