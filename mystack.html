@@ -6,6 +6,7 @@
           rel="stylesheet"
           href="node_modules/bootstrap/dist/css/bootstrap.css"
   />
+  <title>Stack</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
@@ -72,7 +73,7 @@
 <div>
   <p id="stack_box"></p>
 </div>
-<input id="createbtn" class="btn btn-outline-danger" style = "position: fixed; top: 100px; left: 5px" value="Create Stack" />
+<input id="createbtn" class="btn btn-outline-danger" style = "position: fixed; top: 100px; left: 5px" value="Create Stack" readonly/>
 <script>
   createbtn.onclick = function () {
     stack = new MyStack()
@@ -88,7 +89,7 @@
     alert('Был создан stack')
   }
 </script>
-<input id="pushbtn" class="btn btn-outline-warning" style = "position: fixed; top: 150px; left: 5px" value="Push" />
+<input id="pushbtn" class="btn btn-outline-warning" style = "position: fixed; top: 150px; left: 5px" value="Push" readonly/>
 <script>
   document.getElementById('pushbtn').disabled = true
 </script>
@@ -110,7 +111,7 @@
     }
   }
 </script>
-<input id="popbtn" class="btn btn-outline-success" style = "position: fixed; top: 200px; left: 5px" value="Pop" />
+<input id="popbtn" class="btn btn-outline-success" style = "position: fixed; top: 200px; left: 5px" value="Pop" readonly/>
 <script>
   document.getElementById('popbtn').disabled = true
 </script>
@@ -128,7 +129,7 @@
     }
   }
 </script>
-<input id="topbtn" class="btn btn-outline-info" style = "position: fixed; top: 250px; left: 5px" value="Top" />
+<input id="topbtn" class="btn btn-outline-info" style = "position: fixed; top: 250px; left: 5px" value="Top" readonly/>
 <script>
   document.getElementById('topbtn').disabled = true
 </script>
@@ -141,7 +142,7 @@
     }
   }
 </script>
-<input id="isemptybtn" class="btn btn-outline-info" style = "position: fixed; top: 300px; left: 5px" value="isEmpty" />
+<input id="isemptybtn" class="btn btn-outline-info" style = "position: fixed; top: 300px; left: 5px" value="isEmpty" readonly/>
 <script>
   document.getElementById('isemptybtn').disabled = true
 </script>
@@ -154,7 +155,7 @@
     }
   }
 </script>
-<input id="checkbtn" class="btn btn-outline-dark" style = "position: fixed; top: 350px; left: 5px"value="Check" />
+<input id="checkbtn" class="btn btn-outline-dark" style = "position: fixed; top: 350px; left: 5px"value="Check" readonly/>
 <script>
   checkbtn.onclick = function () {
     let checker = new MyStack()
