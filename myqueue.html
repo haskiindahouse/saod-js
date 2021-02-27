@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-  <script src="mystack.js"></script>
+  <script src="myqueue.js"></script>
+  <script src="name_surname_generator.js"></script>
   <link
     rel="stylesheet"
     href="node_modules/bootstrap/dist/css/bootstrap.css"
@@ -73,26 +74,85 @@
 <div>
   <p id="stack_box"></p>
 </div>
-<input id="newclientbtn" class="btn btn-outline-info" value="New client" 
+<input id="newclientbtn" class="btn btn-outline-success" value="New client" 
        style="
        width: 500px;
         height: 50px;
          margin: 0 auto;
           display:flex;
             justify-content: center;"  readonly>
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  <span id="windowA" class="badge-dark" style="font-size: 30pt">A</span>
+  <span id="windowB" class="badge-dark" style="font-size: 30pt">B</span>
+  <span id="windowC" class="badge-dark" style="font-size: 30pt">C</span>
+</li>
 <script>
-  newclientbtn.onclick = function (){
-    var list = document.getElementById("list");
-    list.innerHTML += 
-      '<li class="list-group-item d-flex justify-content-between align-items-center">' + "ГЕНЕРИРУЕМ" +
-      + '<span class="badge bg-primary rounded-sm" style="font-size: 15pt">' + "НОМЕР" + '</span>' + '</li>'
+  let qA = new MyQueue()
+  let qB = new MyQueue()
+  let qC = new MyQueue()
+  let i = 0
+  let windows = ['A', 'B', 'C']
+  function repeatingFunction(){
+    let windowA = document.getElementById("windowA")
+    let windowB = document.getElementById("windowB")
+    let windowC = document.getElementById("windowC")
+    let list = document.getElementById("list")
+    if (qA.length || qB.length){
+      if (qA.length){
+        list.removeChild(list.childNodes[qA.Top()])
+        windowA.innerText = "A " + qA.Pop()[0]
+      }
+      if (qB.length){
+        list.removeChild(list.childNodes[qB.Top()])
+        windowB.innerText = "B " + qB.Pop()[0]
+      }
+      if (qC.length){
+        list.removeChild(list.childNodes[qC.Top()])
+        windowC.innerText = "C " + qC.Pop()[0]
+      }
+      setTimeout(repeatingFunction, 3000)
+    }
+    else{
+      if (!qA.length) {
+        windowA.innerText = "A "
+      }
+      if (!qB.length){
+          windowB.innerText = "B "
+        }
+      if (!qC.length){
+        windowB.innerText = "C "
+      }
+      setTimeout(repeatingFunction, 3000)
+      }
   }
+  newclientbtn.onclick = function () {
+    let list = document.getElementById("list")
+    let current_number = windows[Math.floor(Math.random() * Math.floor(3))]
+    let fi = generator()
+    switch (current_number) {
+      case "A":
+        qA.Push(fi, i);
+        break;
+      case "B":
+        qB.Push(fi, i);
+        break;
+      case "C":
+        qC.Push(fi, i);
+        break;
+    }
+    i++
+    list.innerHTML +=
+      '<li class="list-group-item d-flex justify-content-between align-items-center">' + fi + '<span class="badge badge-dark" style="font-size: 15pt">' + current_number +
+      '</span>' + '<span class="badge badge-dark" style="font-size: 15pt">' + i + '</span>' + '</li>'
+
+  }
+  setTimeout(repeatingFunction, 3000)
 </script>
 <ul id="list" class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-center">
     ФИО клиента
-    <span class="badge bg-primary rounded-sm" style="font-size: 15pt">Номер окна</span>
-    <span class="badge bg-primary rounded-sm" style="font-size: 15pt">Порядковый номер</span>
+    <span class="badge bg-success rounded-sm" style="font-size: 15pt">Номер окна</span>
+    <span class="badge bg-success rounded-sm" style="font-size: 15pt">Порядковый номер</span>
   </li>
 </ul>
 </body>
