@@ -1,7 +1,7 @@
 class MyQueue {
   constructor() {
     this.elem = []
-    this.length = 0
+    this.length = 0;
     this.first = NaN
   }
   Clear() {
@@ -19,8 +19,8 @@ class MyQueue {
     this.first = this.elem[0]
     return pop_elem
   }
-  Push(element) {
-    this.elem[this.length] = element
+  Push(element, position) {
+    this.elem[this.length] = [element, position]
     if (!this.length)
     {
       this.first = this.elem[this.length]
@@ -28,10 +28,11 @@ class MyQueue {
     this.length += 1
   }
   Top() {
-    return this.first
+    return this.first[1]
   }
 }
 
+setTimeout(sayHi, 1000);
 let test = new MyQueue()
 test.Push(2)
 test.Push(4)
