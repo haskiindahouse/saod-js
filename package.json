@@ -19,6 +19,7 @@
   "homepage": "https://github.com/haskiindahouse/SaodJS#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1",
     "serve": "^11.3.2"
   }
 }
