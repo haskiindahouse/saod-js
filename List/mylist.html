@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="mylist.js"></script>
+  <link
+    rel="stylesheet"
+    href="../node_modules/bootstrap/dist/css/bootstrap.css"
+  />
+  <title>Stack</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Задание № 3. Связные списки</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../index.html"
+        >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="monty-hall.html">Monty Hall</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav>
+<div>
+  <p id="list_box"></p>
+</div>
+<input id="createbtn" class="btn btn-outline-danger" style = "position: fixed; top: 100px; left: 5px" value="Create List" readonly/>
+<script>
+  let list
+  createbtn.onclick = function () {
+    list = new MyList()
+    list.First.Value = prompt('Введите значение первого элемента', '')
+    document.getElementById('list_box').innerText = list.ToString()
+    document.getElementById('addendbtn').disabled = false
+    document.getElementById('addbeginbtn').disabled = false
+    document.getElementById('insertbtn').disabled = false
+    document.getElementById('clearbtn').disabled = false
+    document.getElementById('getbyindexbtn').disabled = false
+    document.getElementById('removebyindexbtn').disabled = false
+  }
+</script>
+<input id="addendbtn" class="btn btn-outline-warning" style = "position: fixed; top: 150px; left: 5px" value="AddEnd" readonly/>
+<script>
+  document.getElementById('addendbtn').disabled = true
+</script>
+<script>
+  addendbtn.onclick = function () {
+    list.AddEnd(prompt('Введите элемент для добавления в List', ''))
+    document.getElementById('list_box').innerText = list.ToString()
+  }
+</script>
+<input id="addbeginbtn" class="btn btn-outline-success" style = "position: fixed; top: 200px; left: 5px" value="AddBegin" readonly/>
+<script>
+  document.getElementById('addbeginbtn').disabled = true
+</script>
+<script>
+  addbeginbtn.onclick = function () {
+    list.AddBegin(prompt('Введите элемент для добавления в List', ''))
+    document.getElementById('list_box').innerText = list.ToString()
+  }
+</script>
+<input id="insertbtn" class="btn btn-outline-info" style = "position: fixed; top: 250px; left: 5px" value="Insert" readonly/>
+<script>
+  document.getElementById('insertbtn').disabled = true
+</script>
+<script>
+  insertbtn.onclick = function () {
+    let value = prompt('Введите значение которое будете вставлять', '')
+    let index = Number(prompt('Введите индекс вставляемого элемента', ''))
+    list.Insert(value, index)
+    document.getElementById('list_box').innerText = list.ToString()
+  }
+</script>
+<input id="clearbtn" class="btn btn-outline-danger" style = "position: fixed; top: 300px; left: 5px" value="Clear" readonly/>
+<script>
+  document.getElementById('clearbtn').disabled = true
+</script>
+<script>
+  clearbtn.onclick = function () {
+    list.Clear()
+    document.getElementById('list_box').innerText = list.ToString()
+  }
+</script>
+<input id="getbyindexbtn" class="btn btn-outline-warning" style = "position: fixed; top: 350px; left: 5px" value="GetByIndex" readonly/>
+<script>
+  document.getElementById('getbyindexbtn').disabled = true
+</script>
+<script>
+  getbyindexbtn.onclick = function () {
+    alert(list.GetByIndex(Number(prompt('Введите индекс элемента который вам показать', ''))).Value)
+  }
+</script>
+<input id="removebyindexbtn" class="btn btn-outline-dark" style = "position: fixed; top: 400px; left: 5px" value="RemoveByIndex" readonly/>
+<script>
+  document.getElementById('removebyindexbtn').disabled = true
+</script>
+<script>
+  removebyindexbtn.onclick = function () {
+    list.RemoveByIndex(Number(prompt('Введите индекс элемента который вы хотите удалить', '')))
+    document.getElementById('list_box').innerText = list.ToString()
+  }
+</script>
+</body>
+</html>
