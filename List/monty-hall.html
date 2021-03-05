@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="mylist.js"></script>
+  <link
+    rel="stylesheet"
+    href="../node_modules/bootstrap/dist/css/bootstrap.css"
+  />
+  <title>Stack</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Задание № 3. Парадокс Монти Холла</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../index.html"
+        >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="mylist.html">List</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Количество испытаний</span>
+  </div>
+  <input type="text" id="myText" class="form-control" placeholder="100" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+<input id="montybtn" class="btn btn-outline-success"  value="Вычислить" readonly/>
+<script>
+  let change_wins = 0
+  let change_loses = 0
+  let stay_wins = 0
+  let stay_loses = 0
+  function montyHall(){
+    let doors = new MyList()
+    doors.First.Value = 0
+    doors.AddBegin(0)
+    doors.AddEnd(0)
+    let index_of_car = Math.floor(Math.random() * Math.floor(3)) + 1
+    console.log(index_of_car)
+    doors.GetByIndex(index_of_car).Value = 1
+    let index_of_choose = Math.floor(Math.random() * Math.floor(3)) + 1
+    let door_choose = doors.GetByIndex(index_of_choose).Value
+    if (door_choose === 1){
+      let decision = Math.floor(Math.random() * Math.floor(2)) + 1
+      if (decision === 1){
+        return stay_wins++
+      }
+      else{
+        return change_loses++
+      }
+    }
+    if (door_choose === 0){
+      let decision = Math.floor(Math.random() * Math.floor(2)) + 1
+      if (decision === 1){
+        return stay_loses++
+      }
+    else{
+      return change_wins++
+      }
+    }
+  }
+  montybtn.onclick = function (){
+    change_loses = 0
+    change_wins = 0
+    stay_wins = 0
+    stay_loses = 0
+    let count = Number(document.getElementById('myText').value)
+    for (let i = 0; i < count; i++){
+      montyHall()
+    }
+    document.getElementById('stay_win').innerText = "Не изменил решение и выиграл:" + stay_wins
+    document.getElementById('stay_lose').innerText = "Не изменил решение и проиграл:" + stay_loses
+    document.getElementById('change_win').innerText = "Изменил решение и выиграл:" + change_wins
+    document.getElementById('change_lose').innerText = "Изменил решение и проиграл:" + change_loses
+    document.getElementById('stay_statistic').innerText = "Процент побед без изменения:" + 100*stay_wins/(stay_loses + stay_wins)
+    document.getElementById('change_statistic').innerText = "Процент побед с изменениями:" + 100*change_wins/(change_wins + change_loses)
+  }
+  
+</script>
+<p id="stay_win"class="font-weight-bold">Не изменил решение и выиграл:</p>
+<p id="stay_lose"class="font-weight-bold">Не изменил решение и проиграл:</p>
+<p id="change_win"class="font-weight-bold">Изменил решение и выиграл:</p>
+<p id="change_lose"class="font-weight-bold">Изменил решение и проиграл:</p>
+<p id="stay_statistic"class="font-weight-bold">Процент побед без изменения:</p>
+<p id="change_statistic"class="font-weight-bold">Процент побед с изменениями:</p>
+</body>
+</html>
