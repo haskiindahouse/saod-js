@@ -10,43 +10,62 @@ class MyList{
     this.First = new MyListNode()
   }
   AddEnd(value){
-    let lastNode = new MyListNode()
-    lastNode.Value = value
-    let tmp = this.Count()
-    tmp[1].Next = lastNode
-    lastNode.Prev = tmp[1]
+    if (this.First == null){
+      this.First = new MyListNode()
+      this.First.Value = value
+    }
+    else{
+      let lastNode = new MyListNode()
+      lastNode.Value = value
+      let tmp = this.Count()
+      tmp[1].Next = lastNode
+      lastNode.Prev = tmp[1]
+    }
   }
   AddBegin(value){
-    let firstNode = new MyListNode()
-    firstNode.Value = value
-    let tmp = this.First
-    tmp.Prev = firstNode
-    firstNode.Next = tmp
-    this.First = firstNode
+    if (this.First == null){
+      this.First = new MyListNode()
+      this.First.Value = value
+    }
+    else{
+      let firstNode = new MyListNode()
+      firstNode.Value = value
+      let tmp = this.First
+      tmp.Prev = firstNode
+      firstNode.Next = tmp
+      this.First = firstNode
+    }
   }
   Insert(value, index){
-    let insertNode = new MyListNode()
-    insertNode.Value = value
-    if (index === 1){
-      return this.AddBegin(value)
+    if (this.First == null){
+      this.First = new MyListNode()
+      this.First.Value = value
     }
-    if (index === this.Count()[0]){
-      return this.AddEnd(value)
-    }
-    let k = 1
-    let step = this.First
-    while (step.Next != null  && k !== index){
-      k++
-      step = step.Next
-    }
-    if (step.Next == null && k !== index){
-      return alert('Такого элемента не существует!')
-    }
-    if (k === index){
-      insertNode.Next = step
-      insertNode.Prev = step.Prev
-      step.Prev.Next = insertNode
-      step.Prev = insertNode
+    else
+    {
+      let insertNode = new MyListNode()
+      insertNode.Value = value
+      if (index === 1){
+        return this.AddBegin(value)
+      }
+      if (index === this.Count()[0]){
+        return this.AddEnd(value)
+      }
+      let k = 1
+      let step = this.First
+      while (step.Next != null  && k !== index){
+        k++
+        step = step.Next
+      }
+      if (step.Next == null && k !== index){
+        return alert('Такого элемента не существует!')
+      }
+      if (k === index){
+        insertNode.Next = step
+        insertNode.Prev = step.Prev
+        step.Prev.Next = insertNode
+        step.Prev = insertNode
+      }
     }
   }
   Count() {
@@ -124,8 +143,6 @@ class MyList{
     }
   }
   Clear(){
-    this.First.Value = null
-    this.First.Next = null
+    this.First = null
   }
 }
-
