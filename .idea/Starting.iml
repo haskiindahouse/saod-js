@@ -10,5 +10,7 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="mocha" level="application" />
     <orderEntry type="library" name="chai" level="application" />
+    <orderEntry type="library" name="react" level="application" />
+    <orderEntry type="library" name="react-dom" level="application" />
   </component>
 </module>
