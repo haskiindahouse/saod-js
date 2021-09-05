@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+  <!-- подключаем библиотеку Mocha -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+  <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+  <script>
+    mocha.setup('bdd')
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+  <!-- в chai есть много всего, выносим assert в глобальную область -->
+  <script>
+    let assert = chai.assert
+  </script>
+  <script src="myset.js"></script>
+  <link
+    rel="stylesheet"
+    href="../../node_modules/bootstrap/dist/css/bootstrap.css"
+  />
+  <title>Set</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" name="viewport">
+  <style>
+    .slidecontainer {
+      width: 100%;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Задание № 4. Множества. Технология модульного тестирования</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../index.html"
+        >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="myset_tasks.html">Практические задания</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Множество 1</span>
+  </div>
+  <input type="text" id="mySet1" class="form-control" placeholder="1 2 6 6" aria-label="Username" aria-describedby="basic-addon1">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon2">Множество 2</span>
+  </div>
+  <input type="text" id="mySet2" class="form-control" placeholder="1 2 3 4" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <input id="unionbtn" class="btn btn-outline-dark" value="Union" readonly/>
+  </div>
+  <input type="text" id="resultUnion" class="form-control" placeholder="1 2 3 4 6" aria-label="Username" aria-describedby="basic-addon1" readonly>
+</div>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <input id="diffbtn" class="btn btn-outline-dark" value="Difference" readonly/>
+  </div>
+  <input type="text" id="resultDiff" class="form-control" placeholder="3 4 6" aria-label="Username" aria-describedby="basic-addon1" readonly>
+</div>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <input id="interbtn" class="btn btn-outline-dark" value="Intersection" readonly/>
+  </div>
+  <input type="text" id="resultIntersection" class="form-control" placeholder="1 2" aria-label="Username" aria-describedby="basic-addon1" readonly>
+</div>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <input id="subsetbtn" class="btn btn-outline-dark" value="Subset" readonly/>
+  </div>
+  <input type="text" id="resultSubset" class="form-control" placeholder="false" aria-label="Username" aria-describedby="basic-addon1" readonly>
+</div>
+
+<script>
+  unionbtn.onclick = function (){
+    let s1 = new MySet()
+    let s2 = new MySet()
+    let list1 = document.getElementById('mySet1').value.split(" ")
+    let list2 = document.getElementById('mySet2').value.split(" ")
+    for (let i = 0; i < list1.length; i++){
+      s1.Add(list1[i])
+    }
+    for (let i = 0; i < list2.length; i++){
+      s2.Add(list2[i])
+    }
+    document.getElementById('resultUnion').value = MySet.Union(s1, s2).list
+  }
+  diffbtn.onclick = function (){
+    let s1 = new MySet()
+    let s2 = new MySet()
+    let list1 = document.getElementById('mySet1').value.split(" ")
+    let list2 = document.getElementById('mySet2').value.split(" ")
+    for (let i = 0; i < list1.length; i++){
+      s1.Add(list1[i])
+    }
+    for (let i = 0; i < list2.length; i++){
+      s2.Add(list2[i])
+    }
+    document.getElementById('resultDiff').value = MySet.Difference(s1, s2).list
+  }
+  interbtn.onclick = function (){
+    let s1 = new MySet()
+    let s2 = new MySet()
+    let list1 = document.getElementById('mySet1').value.split(" ")
+    let list2 = document.getElementById('mySet2').value.split(" ")
+    for (let i = 0; i < list1.length; i++){
+      s1.Add(list1[i])
+    }
+    for (let i = 0; i < list2.length; i++){
+      s2.Add(list2[i])
+    }
+    document.getElementById('resultIntersection').value = MySet.Intersection(s1, s2).list
+  }
+  subsetbtn.onclick = function (){
+    let s1 = new MySet()
+    let s2 = new MySet()
+    let list1 = document.getElementById('mySet1').value.split(" ")
+    let list2 = document.getElementById('mySet2').value.split(" ")
+    for (let i = 0; i < list1.length; i++){
+      s1.Add(list1[i])
+    }
+    for (let i = 0; i < list2.length; i++){
+      s2.Add(list2[i])
+    }
+    document.getElementById('resultSubset').value = MySet.Subset(s1, s2)
+  }
+</script>
+<script>
+  function diff(s1, s2) {
+    /* функция для тестирования свойства Difference у класса MySet */
+    return MySet.Difference(s1, s2).list.toString()
+  }
+  function onion(s1, s2){
+    return MySet.Union(s1, s2).list.toString()
+  }
+  function  intersec(s1, s2){
+    return MySet.Intersection(s1, s2).list.toString()
+  }
+  function  subset(s1, s2){
+    return MySet.Subset(s1, s2)
+  }
+</script>
+<!-- в этом скрипте находятся спеки -->
+<script src="test.js"></script>
+
+<!-- в элементе с id="mocha" будут результаты тестов -->
+<div id="mocha"></div>
+<!-- запустить тесты! -->
+<script>
+  mocha.run();
+</script>
+</body>
+</html>

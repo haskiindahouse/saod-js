@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="mystack.js"></script>
+  <link
+          rel="stylesheet"
+          href="../../node_modules/bootstrap/dist/css/bootstrap.css"
+  />
+  <title>Stack</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Задание № 1. Стек. Проверка правильности расстановки скобок</a>
+  <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../index.html"
+        >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+        >
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</nav>
+<div>
+  <p id="stack_box"></p>
+</div>
+<input id="createbtn" class="btn btn-outline-danger" style = "position: fixed; top: 100px; left: 5px" value="Create Stack" readonly/>
+<script>
+  createbtn.onclick = function () {
+    stack = new MyStack()
+    document.getElementById('pushbtn').disabled = false
+    document.getElementById('popbtn').disabled = false
+    document.getElementById('topbtn').disabled = false
+    document.getElementById('isemptybtn').disabled = false
+    let string = 'Stack: '
+    for (let i = 0; i < stack.length; i++) {
+      string += String(stack.elem[i]) + " "
+    }
+    document.getElementById('stack_box').innerHTML = string
+    alert('Был создан stack')
+  }
+</script>
+<input id="pushbtn" class="btn btn-outline-warning" style = "position: fixed; top: 150px; left: 5px" value="Push" readonly/>
+<script>
+  document.getElementById('pushbtn').disabled = true
+</script>
+<script>
+  pushbtn.onclick = function () {
+    let new_el = prompt('Введите элемент для добавления в stack', '')
+    let oppBrackets = ['(', '[', '{']
+    let clsBrackets = [')', ']', '}']
+    if (!new_el.length || isNaN(Number(new_el)) && !oppBrackets.includes(new_el) && !clsBrackets.includes(new_el)) {
+      alert('NaN Exception!')
+    } else {
+      stack.Push(new_el)
+      let string = 'Stack: '
+      for (let i = 0; i < stack.length; i++) {
+        string += String(stack.elem[i]) + " "
+      }
+      document.getElementById('stack_box').innerHTML = string
+      alert(new_el + ' был добавлен!')
+    }
+  }
+</script>
+<input id="popbtn" class="btn btn-outline-success" style = "position: fixed; top: 200px; left: 5px" value="Pop" readonly/>
+<script>
+  document.getElementById('popbtn').disabled = true
+</script>
+<script>
+  popbtn.onclick = function () {
+    if (!stack.length) {
+      alert('Stack is empty!')
+    } else {
+      alert(stack.Pop() + ' был удален!')
+      let string = 'Stack: '
+      for (let i = 0; i < stack.length; i++) {
+        string += String(stack.elem[i]) + " "
+      }
+      document.getElementById('stack_box').innerHTML = string
+    }
+  }
+</script>
+<input id="topbtn" class="btn btn-outline-info" style = "position: fixed; top: 250px; left: 5px" value="Top" readonly/>
+<script>
+  document.getElementById('topbtn').disabled = true
+</script>
+<script>
+  topbtn.onclick = function () {
+    if (!stack.length) {
+      alert('Stack is empty!')
+    } else {
+      alert(stack.Top() + ' самый "верхний" элемент!')
+    }
+  }
+</script>
+<input id="isemptybtn" class="btn btn-outline-info" style = "position: fixed; top: 300px; left: 5px" value="isEmpty" readonly/>
+<script>
+  document.getElementById('isemptybtn').disabled = true
+</script>
+<script>
+  isemptybtn.onclick = function () {
+    if (stack.isEmpty()) {
+      alert('Stack is empty!')
+    } else {
+      alert('В стеке ' + stack.length + ' элементов')
+    }
+  }
+</script>
+<input id="checkbtn" class="btn btn-outline-dark" style = "position: fixed; top: 350px; left: 5px"value="Check" readonly/>
+<script>
+  checkbtn.onclick = function () {
+    let checker = new MyStack()
+    let oppBrackets = ['(', '[', '{']
+    let clsBrackets = [')', ']', '}']
+    for(let i = 0; i < stack.length; i++){
+      if (oppBrackets.includes(stack.elem[i])){
+        checker.Push(stack.elem[i])
+      }
+      if (clsBrackets.includes(stack.elem[i])){
+        if (checker.length){
+          if (oppBrackets.indexOf(checker.Top()) === clsBrackets.indexOf(stack.elem[i])){
+            checker.Pop()
+          }
+        }
+        else{
+          return alert('Wrong brackets!')
+        }
+      }
+    }
+    if (checker.length == 0){
+      return alert('Right brackets!')
+    }
+    else{
+      return alert('Wrong brackets!')
+    }
+  }
+</script>
+</body>
+</html>

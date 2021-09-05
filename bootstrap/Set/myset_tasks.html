@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <script src="myset.js"></script>
+  <link
+    rel="stylesheet"
+    href="../../node_modules/bootstrap/dist/css/bootstrap.css"
+  />
+  <title>Set</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" name="viewport">
+  <style>
+    .slidecontainer {
+      width: 100%;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Задачи из Задания №4</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../index.html"
+        >Home <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="myset.html">Set</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<h3>Прямой перебор - задача о 100 дверях.</h3>
+<p class="text-info">Цель:</p>
+<p class="text-decoration-none">Построить алгоритм прямого перебора на множестве.</p>
+<p class="text-info">Решаемая задача:</p>
+<p class="text-decoration-none; border-left">
+  Есть множество из 100 дверей, изначально закрытых. Организуется прямой перебор всех дверей в множестве:
+  - в первом проходе мы "переключаем" каждую дверь (открытую - закрываем, закрытую - открываем);
+  - во втором проходе мы "переключаем" каждую вторую дверь (№2, №4, №6, №8 и т.д.);
+  - в третьем проходе "переключаем" каждую третью дверь (№3, №6, №9 и т.д.);
+  -... и так делаем сто проходов по нашему множеству дверей.
+  Вопрос:
+  Какие из дверей останутся закрытыми, а какие будут открытыми после 100-го прохода?</p>
+<div class="input-group pt-2 ">
+  <div class="input-group-prepend">
+    <input id="task1btn" class="btn btn-outline-info" value="Вычислить" readonly/>
+  </div>
+  <input type="text" id="resultTask1" class="form-control" placeholder="Какие-то двери..." aria-label="Username" aria-describedby="basic-addon1" readonly>
+</div>
+<script>
+  task1btn.onclick = function (){
+    let s = new MySet()
+    for (let i = 0; i < 100; i++){
+      s.Add([i, true])
+    }
+    let step = 1
+    while (step < 100){
+      for (let i = 0; i < s.Count(); i += step){
+        s.list[i][1] = !s.list[i][1]
+      }
+      step++
+    }
+    let result = new MySet()
+    for (let i = 0; i < s.Count(); i++){
+      if (!s.list[i][1]){
+        result.Add(s.list[i][0])
+      }
+    }
+    document.getElementById('resultTask1').value = result.list.slice(1)
+  }
+</script>
+</body>
+</html>
